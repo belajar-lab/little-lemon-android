@@ -7,6 +7,7 @@ import androidx.compose.ui.tooling.preview.Preview
 @Composable
 fun HomeScreen() {
     Column {
+        TopAppBar()
         UpperPanel()
         LowerPanel(dishes = DishRepository.dishes)
     }
