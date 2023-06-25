@@ -47,6 +47,7 @@ object DishRepository {
             R.drawable.lasagne
         )
     )
+    fun getDish(id: Int) = dishes.firstOrNull { it.id == id }
 }
 
 data class Dish(
