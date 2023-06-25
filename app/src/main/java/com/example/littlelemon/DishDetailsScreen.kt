@@ -25,7 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun DishDetails(id: Int) {
+fun DishDetailsScreen(id: Int) {
     val dish = requireNotNull(DishRepository.getDish(id))
     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
         TopAppBar()
@@ -76,5 +76,5 @@ fun Counter() {
 @Preview(showBackground = true)
 @Composable
 fun DishDetailsPreview() {
-    DishDetails(id = 1)
+    DishDetailsScreen(id = 5)
 }

@@ -2,19 +2,13 @@ package com.example.littlelemon
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navController: NavController) {
     Column {
         TopAppBar()
         UpperPanel()
-        LowerPanel(dishes = DishRepository.dishes)
+        LowerPanel(navController = navController, dishes = DishRepository.dishes)
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun HomeScreenPreview() {
-    HomeScreen()
 }
