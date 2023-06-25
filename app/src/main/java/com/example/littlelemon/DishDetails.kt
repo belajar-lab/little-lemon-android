@@ -36,7 +36,7 @@ fun DishDetails(id: Int) {
             contentScale = ContentScale.FillWidth
         )
         Column(modifier = Modifier.padding(start = 10.dp, end = 10.dp)) {
-            Text(text = dish.name, style = MaterialTheme.typography.headlineLarge)
+            Text(text = dish.name, style = MaterialTheme.typography.titleLarge)
             Text(text = dish.description, style = MaterialTheme.typography.bodyLarge)
             Counter()
             Button(onClick = { /*TODO*/ }) {

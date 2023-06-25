@@ -1,6 +1,7 @@
 package com.example.littlelemon
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,19 +20,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.littlelemon.ui.theme.LittleLemonColor
 
 @Composable
 fun UpperPanel() {
     Column(
-        modifier = Modifier.padding(start = 12.dp, end = 12.dp, top = 16.dp, bottom = 16.dp)
+        modifier = Modifier
+            .background(color = LittleLemonColor.green)
+            .padding(start = 12.dp, end = 12.dp, top = 16.dp, bottom = 16.dp)
     ) {
         Text(
             text = stringResource(id = R.string.title),
+            color = LittleLemonColor.yellow,
             fontSize = 40.sp,
             fontWeight = FontWeight.Bold
         )
         Text(
             text = stringResource(id = R.string.location),
+            color = LittleLemonColor.cloud,
             fontSize = 24.sp
         )
         Row(
@@ -41,6 +47,7 @@ fun UpperPanel() {
             Text(
                 text = stringResource(id = R.string.description),
                 style = MaterialTheme.typography.bodyLarge,
+                color = LittleLemonColor.cloud,
                 modifier = Modifier
                     .padding(bottom = 28.dp, end = 20.dp)
                     .fillMaxWidth(.6f)

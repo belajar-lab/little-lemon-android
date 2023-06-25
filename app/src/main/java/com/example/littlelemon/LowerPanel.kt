@@ -18,6 +18,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.littlelemon.ui.theme.LittleLemonColor
 
 @Composable
 fun LowerPanel(dishes: List<Dish> = listOf()) {
@@ -36,7 +37,7 @@ fun WeeklySpecialCard() {
     ) {
         Text(
             text = stringResource(id = R.string.weekly_special),
-            style = MaterialTheme.typography.displaySmall,
+            style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.padding(8.dp)
         )
     }
@@ -53,7 +54,7 @@ fun MenuDish(dish: Dish) {
             Column {
                 Text(
                     text = dish.name,
-                    style = MaterialTheme.typography.headlineMedium
+                    style = MaterialTheme.typography.titleMedium
                 )
                 Text(
                     text = dish.description,
@@ -76,6 +77,7 @@ fun MenuDish(dish: Dish) {
     }
     Divider(
         modifier = Modifier.padding(start = 8.dp, end = 8.dp),
+        color = LittleLemonColor.yellow,
         thickness = 1.dp
     )
 }
