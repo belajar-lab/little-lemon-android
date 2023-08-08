@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.room.Room
+import com.example.littlelemon.screen.Home
 import com.example.littlelemon.screen.Onboarding
 import com.example.littlelemon.screen.Profile
 import com.example.littlelemon.ui.theme.LittleLemonTheme
@@ -49,7 +50,7 @@ class MainActivity : ComponentActivity() {
                     navController = navController,
                     startDestination = if (sharedPreferences.all.isEmpty()) Onboarding.route else Home.route
                 ) {
-                    composable(Home.route) { HomeScreen(navController = navController) }
+                    composable(Home.route) { Home(navController = navController) }
                     composable(Onboarding.route) {
                         Onboarding(
                             sharedPreferences = sharedPreferences,
