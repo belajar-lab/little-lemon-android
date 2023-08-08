@@ -12,3 +12,11 @@ object DishDetails: Destinations {
     override val route = "Menu"
     const val argDishId = "dishId"
 }
+
+object Onboarding: Destinations {
+    override val route = "Onboarding"
+}
+
+object Profile: Destinations {
+    override val route = "Profile"
+}

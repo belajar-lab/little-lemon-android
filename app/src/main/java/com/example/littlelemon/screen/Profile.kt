@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -15,6 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.littlelemon.Onboarding
+import com.example.littlelemon.R
 
 @Composable
 fun Profile(sharedPreferences: SharedPreferences, navController: NavController) {
@@ -24,7 +25,7 @@ fun Profile(sharedPreferences: SharedPreferences, navController: NavController) 
 
     Column {
         Image(
-            painter = painterResource(id = R.drawable.logo),
+            painter = painterResource(id = R.drawable.littlelemonimgtxt_nobg),
             contentDescription = "Little Lemon Logo",
             modifier = Modifier.fillMaxWidth(.5f)
         )
@@ -47,7 +48,6 @@ fun Profile(sharedPreferences: SharedPreferences, navController: NavController) 
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ItemField(title: String, text: String) {
     Column(modifier = Modifier.padding(start = 16.dp, top = 4.dp, end = 16.dp, bottom = 24.dp)) {

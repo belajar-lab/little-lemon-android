@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -29,6 +28,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.littlelemon.Home
+import com.example.littlelemon.R
 
 @Composable
 fun Onboarding(sharedPreferences: SharedPreferences, navController: NavController) {
@@ -56,7 +57,7 @@ fun Onboarding(sharedPreferences: SharedPreferences, navController: NavControlle
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Image(
-            painter = painterResource(id = R.drawable.logo),
+            painter = painterResource(id = R.drawable.littlelemonimgtxt_nobg),
             contentDescription = "Little Lemon Logo",
             modifier = Modifier.fillMaxWidth(.5f)
         )
@@ -129,7 +130,6 @@ fun Onboarding(sharedPreferences: SharedPreferences, navController: NavControlle
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InputField(label: String, value: String, onValueChange: (String) -> Unit) {
     Column(modifier = Modifier.padding(vertical = 8.dp)) {
