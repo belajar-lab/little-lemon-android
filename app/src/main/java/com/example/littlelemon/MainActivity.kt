@@ -11,15 +11,30 @@ import androidx.navigation.navArgument
 import com.example.littlelemon.screen.Onboarding
 import com.example.littlelemon.screen.Profile
 import com.example.littlelemon.ui.theme.LittleLemonTheme
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.engine.android.Android
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.request.get
+import io.ktor.client.statement.HttpResponse
+import io.ktor.http.ContentType
+import io.ktor.serialization.kotlinx.json.json
 
 class MainActivity : ComponentActivity() {
+    private val sharedPreferences by lazy {
+        getSharedPreferences("LittleLemon", MODE_PRIVATE)
+    }
+
+    private val httpClient = HttpClient(Android) {
+        install(ContentNegotiation) {
+            json(contentType = ContentType("text", "plain"))
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             LittleLemonTheme {
-                val sharedPreferences by lazy {
-                    getSharedPreferences("LittleLemon", MODE_PRIVATE)
-                }
                 val navController = rememberNavController()
                 NavHost(
                     navController = navController,
@@ -52,5 +67,10 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    private suspend fun fetchMenu(): List<MenuItemNetwork> {
+        val response: HttpResponse = httpClient.get("https://raw.githubusercontent.com/Meta-Mobile-Developer-PC/Working-With-Data-API/main/menu.json")
+        return response.body<MenuNetwork>().menu
     }
 }
