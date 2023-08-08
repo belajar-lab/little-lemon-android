@@ -77,4 +77,6 @@ dependencies {
     // Room
     implementation(libs.room.runtime)
     ksp(libs.room.compiler)
+    // Google fonts
+    implementation(libs.google.fonts)
 }
