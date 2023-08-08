@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
                 NavHost(navController = navController, startDestination = Home.route) {
                     composable(Home.route) { HomeScreen(navController = navController) }
                     composable(
-                        route = DishDetails.route + "/${DishDetails.argDishId}",
+                        route = DishDetails.route + "/{${DishDetails.argDishId}}",
                         arguments = listOf(navArgument(DishDetails.argDishId) {
                             type = NavType.IntType
                         })
