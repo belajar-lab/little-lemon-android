@@ -28,4 +28,8 @@ data class MenuItemNetwork(
 
     @SerialName("category")
     val category: String
-)
+) {
+    fun toMenuItemRoom() = MenuItemRoom(
+        id, title, price, imageUrl, category
+    )
+}
