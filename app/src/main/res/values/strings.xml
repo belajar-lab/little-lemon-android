@@ -9,4 +9,7 @@
     <string name="order_button_text">Order Take Away</string>
     <string name="weekly_special">Weekly Special</string>
     <string name="add_for">Add for</string>
+    <string name="dish_image">Dish Image</string>
+    <string name="hero_image">Restaurant\'s food Image</string>
+    <string name="enter_search_phrase">Enter Search Phrase</string>
 </resources>

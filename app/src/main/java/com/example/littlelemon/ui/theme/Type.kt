@@ -51,7 +51,7 @@ val Typography = Typography(
     ),
     titleSmall = TextStyle(
         fontFamily = karla,
-        fontWeight = FontWeight.Medium,
+        fontWeight = FontWeight.SemiBold,
         fontSize = 16.sp
     ),
     bodyLarge = TextStyle(

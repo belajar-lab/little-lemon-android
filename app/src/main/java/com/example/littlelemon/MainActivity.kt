@@ -1,8 +1,12 @@
 package com.example.littlelemon
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -21,6 +25,8 @@ import io.ktor.client.request.get
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.ContentType
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     private val sharedPreferences by lazy {
@@ -45,12 +51,14 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             LittleLemonTheme {
+                val databaseMenuItems by database.menuItemDao().getAll().observeAsState(emptyList())
+
                 val navController = rememberNavController()
                 NavHost(
                     navController = navController,
                     startDestination = if (sharedPreferences.all.isEmpty()) Onboarding.route else Home.route
                 ) {
-                    composable(Home.route) { Home(navController = navController) }
+                    composable(Home.route) { Home(navController = navController, dishes = databaseMenuItems) }
                     composable(Onboarding.route) {
                         Onboarding(
                             sharedPreferences = sharedPreferences,
@@ -75,6 +83,11 @@ class MainActivity : ComponentActivity() {
                         DishDetailsScreen(id = id)
                     }
                 }
+            }
+        }
+        lifecycleScope.launch(Dispatchers.IO) {
+            if (database.menuItemDao().isEmpty()) {
+                saveMenuToDatabase(fetchMenu())
             }
         }
     }
