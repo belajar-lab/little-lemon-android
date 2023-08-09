@@ -30,6 +30,6 @@ data class MenuItemNetwork(
     val category: String
 ) {
     fun toMenuItemRoom() = MenuItemRoom(
-        id, title, price, imageUrl, category
+        id, title, description, price, imageUrl, category
     )
 }
