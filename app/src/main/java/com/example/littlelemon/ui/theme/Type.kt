@@ -2,29 +2,66 @@ package com.example.littlelemon.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.googlefonts.Font
+import androidx.compose.ui.text.googlefonts.GoogleFont
 import androidx.compose.ui.unit.sp
+import com.example.littlelemon.R
+
+val provider = GoogleFont.Provider(
+    providerAuthority = "com.google.android.gms.fonts",
+    providerPackage = "com.google.android.gms",
+    certificates = R.array.com_google_android_gms_fonts_certs
+)
+
+val markaziText = FontFamily(
+    Font(googleFont = GoogleFont("Markazi Text"), fontProvider = provider)
+)
+
+val karla = FontFamily(
+    Font(googleFont = GoogleFont("Karla"), fontProvider = provider)
+)
 
 val Typography = Typography(
-    titleLarge = TextStyle(
-        fontWeight = FontWeight.Bold,
-        fontSize = 26.sp,
-        color = LittleLemonColor.charcoal
+    displayLarge = TextStyle(
+        fontFamily = markaziText,
+        fontWeight = FontWeight.Medium,
+        fontSize = 64.sp
     ),
-    titleMedium = TextStyle(
+    displayMedium = TextStyle(
+        fontFamily = markaziText,
+        fontWeight = FontWeight.Normal,
+        fontSize = 40.sp
+    ),
+    headlineLarge = TextStyle(
+        fontFamily = karla,
+        fontWeight = FontWeight.ExtraBold,
+        fontSize = 20.sp
+    ),
+    titleLarge = TextStyle(
+        fontFamily = karla,
         fontWeight = FontWeight.Bold,
         fontSize = 18.sp,
-        color = LittleLemonColor.charcoal
+    ),
+    titleMedium = TextStyle(
+        fontFamily = karla,
+        fontWeight = FontWeight.Medium,
+        fontSize = 18.sp,
+    ),
+    titleSmall = TextStyle(
+        fontFamily = karla,
+        fontWeight = FontWeight.Medium,
+        fontSize = 16.sp
     ),
     bodyLarge = TextStyle(
+        fontFamily = karla,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
-        color = LittleLemonColor.green
     ),
     bodyMedium = TextStyle(
         fontWeight = FontWeight.Bold,
         fontSize = 14.sp,
-        color = LittleLemonColor.green
     ),
     labelLarge = TextStyle(
         fontWeight = FontWeight.Bold,
