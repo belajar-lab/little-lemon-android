@@ -80,4 +80,6 @@ dependencies {
     implementation(libs.runtime.livedata)
     // Google fonts
     implementation(libs.google.fonts)
+    // Coroutine Image Loader
+    implementation(libs.coil.compose)
 }

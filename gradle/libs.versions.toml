@@ -15,6 +15,7 @@ kotlin-plugin-serialization = "1.9.0"
 room = "2.5.2"
 google-fonts = "1.4.3"
 runtime-livedata = "1.4.3"
+coil-compose = "2.4.0"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -37,8 +38,9 @@ ktor-client-content-negotiation = { group = "io.ktor", name = "ktor-client-conte
 ktor-serialization-kotlinx-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
-runtime-livedata =  { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtime-livedata"}
+runtime-livedata =  { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtime-livedata" }
 google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "google-fonts" }
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil-compose" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
