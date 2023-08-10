@@ -12,4 +12,5 @@
     <string name="dish_image">Dish Image</string>
     <string name="hero_image">Restaurant\'s food Image</string>
     <string name="enter_search_phrase">Enter Search Phrase</string>
+    <string name="order_for_devilery">ORDER FOR DELIVERY!</string>
 </resources>

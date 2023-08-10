@@ -22,7 +22,7 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = LittleLemonColor.yellow,
+    primary = LittleLemonColor.green,
     secondary = LittleLemonColor.pink,
     tertiary = LittleLemonColor.cloud
 
