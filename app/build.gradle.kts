@@ -82,4 +82,6 @@ dependencies {
     implementation(libs.google.fonts)
     // Coroutine Image Loader
     implementation(libs.coil.compose)
+    // Glide compose
+    implementation(libs.glide.compose)
 }
