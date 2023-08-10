@@ -1,4 +1,4 @@
-package com.example.littlelemon
+package com.example.littlelemon.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -23,12 +23,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.littlelemon.DishRepository
+import com.example.littlelemon.R
 
 @Composable
-fun DishDetailsScreen(id: Int) {
+fun DishDetails(id: Int) {
     val dish = requireNotNull(DishRepository.getDish(id))
     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-        TopAppBar()
         Image(
             painter = painterResource(id = dish.imageResource),
             contentDescription = "Dish Image",
@@ -76,5 +77,5 @@ fun Counter() {
 @Preview(showBackground = true)
 @Composable
 fun DishDetailsPreview() {
-    DishDetailsScreen(id = 5)
+    DishDetails(id = 5)
 }

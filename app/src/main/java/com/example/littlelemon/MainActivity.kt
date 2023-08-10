@@ -15,6 +15,7 @@ import androidx.room.Room
 import com.example.littlelemon.screen.Home
 import com.example.littlelemon.screen.Onboarding
 import com.example.littlelemon.screen.Profile
+import com.example.littlelemon.screen.DishDetails
 import com.example.littlelemon.ui.theme.LittleLemonTheme
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -79,7 +80,7 @@ class MainActivity : ComponentActivity() {
                         val id = requireNotNull(it.arguments?.getInt(DishDetails.argDishId)) {
                             "Dish id is null"
                         }
-                        DishDetailsScreen(id = id)
+                        DishDetails(id = id)
                     }
                 }
             }
