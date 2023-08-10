@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -23,7 +24,6 @@ import androidx.compose.material3.MultiChoiceSegmentedButtonRow
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -40,11 +40,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import com.example.littlelemon.DishDetails
 import com.example.littlelemon.MenuItemRoom
 import com.example.littlelemon.Profile
 import com.example.littlelemon.R
@@ -54,7 +54,7 @@ import com.example.littlelemon.ui.theme.LittleLemonColor
 fun Home(navController: NavController, dishes: List<MenuItemRoom>) {
     var searchPhrase by rememberSaveable { mutableStateOf("") }
     val selectedCategory = remember { mutableStateListOf<String>() }
-    val categoryList = listOf("Starters", "Mains", "Desserts", "Drinks")
+    val categoryList = dishes.map { it.category }.distinct() //listOf("Starters", "Mains", "Desserts", "Drinks")
 
     var menuItems = if (searchPhrase.isNotEmpty()) {
         dishes.filter { it.title.contains(searchPhrase, ignoreCase = true) }
@@ -70,10 +70,10 @@ fun Home(navController: NavController, dishes: List<MenuItemRoom>) {
         item {
             Header(navController)
             HeroSection(searchPhrase) { searchPhrase = it }
-            FilterMenu(selectedCategory, categoryList)
+            MenuBreakdown(selectedCategory, categoryList)
         }
         items(menuItems) { dish ->
-            MenuItem2(navController, dish)
+            MenuItem(dish)
             HorizontalDivider(
                 modifier = Modifier.padding(horizontal = 12.dp),
                 thickness = 1.dp,
@@ -122,11 +122,13 @@ fun HeroSection(searchPhrase: String, setSearchPhrase: (String) -> Unit) {
             style = MaterialTheme.typography.displayLarge,
             color = LittleLemonColor.yellow,
         )
-        Row(
-            verticalAlignment = Alignment.Bottom,
-            modifier = Modifier.padding(top = 20.dp)
-        ) {
-            Column(verticalArrangement = Arrangement.SpaceBetween) {
+        Row(verticalAlignment = Alignment.Bottom) {
+            Column(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth(.6f),
+                verticalArrangement = Arrangement.SpaceBetween
+            ) {
                 Text(
                     text = stringResource(id = R.string.restaurant_location),
                     style = MaterialTheme.typography.displayMedium,
@@ -137,8 +139,7 @@ fun HeroSection(searchPhrase: String, setSearchPhrase: (String) -> Unit) {
                     style = MaterialTheme.typography.bodyLarge,
                     color = LittleLemonColor.cloud,
                     modifier = Modifier
-                        .padding(bottom = 28.dp, end = 20.dp)
-                        .fillMaxWidth(.6f)
+                        .padding(bottom = 8.dp, end = 16.dp)
                 )
             }
             Image(
@@ -146,7 +147,7 @@ fun HeroSection(searchPhrase: String, setSearchPhrase: (String) -> Unit) {
                 contentDescription = stringResource(id = R.string.hero_image),
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .aspectRatio(1f / 1f)
+                    .aspectRatio(5f / 6f)
                     .clip(RoundedCornerShape(10.dp))
             )
         }
@@ -165,13 +166,14 @@ fun HeroSection(searchPhrase: String, setSearchPhrase: (String) -> Unit) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FilterMenu(selectedCategory: SnapshotStateList<String>, categoryList: List<String>) {
+fun MenuBreakdown(selectedCategory: SnapshotStateList<String>, categoryList: List<String>) {
     Column(modifier = Modifier.padding(12.dp)) {
         Text(
             text = stringResource(id = R.string.order_for_devilery),
-            style = MaterialTheme.typography.headlineLarge
+            style = MaterialTheme.typography.headlineLarge,
+            fontWeight = FontWeight.ExtraBold
         )
-        MultiChoiceSegmentedButtonRow {
+        MultiChoiceSegmentedButtonRow(modifier = Modifier.padding(vertical = 16.dp)) {
             categoryList.forEachIndexed { index, category ->
                 SegmentedButton(
                     checked = category in selectedCategory,
@@ -182,7 +184,10 @@ fun FilterMenu(selectedCategory: SnapshotStateList<String>, categoryList: List<S
                             selectedCategory.add(category)
                         }
                     },
-                    shape = SegmentedButtonDefaults.shape(position = index, count = categoryList.size)
+                    shape = SegmentedButtonDefaults.shape(
+                        position = index,
+                        count = categoryList.size
+                    )
                 ) {
                     Text(text = category)
                 }
@@ -190,31 +195,25 @@ fun FilterMenu(selectedCategory: SnapshotStateList<String>, categoryList: List<S
         }
         HorizontalDivider(
             thickness = 1.dp,
-            color = Color.Gray
+            color = Color.LightGray
         )
     }
 }
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun MenuItem(navController: NavController? = null, dish: MenuItemRoom) {
-    Surface(
-        onClick = { navController?.navigate(DishDetails.route + "/${dish.id}") },
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(12.dp)
-    ) {
-        Row(horizontalArrangement = Arrangement.End) {
-            Column(
-                modifier = Modifier.fillMaxWidth(.75f),
-                verticalArrangement = Arrangement.Bottom
-            ) {
-                Text(text = dish.title, style = MaterialTheme.typography.titleLarge)
+fun MenuItem(dish: MenuItemRoom) {
+    ListItem(
+        headlineContent = {
+            Text(text = dish.title, style = MaterialTheme.typography.titleLarge)
+        },
+        supportingContent = {
+            Column {
                 Text(
                     text = dish.description,
-                    modifier = Modifier.padding(vertical = 8.dp),
+                    modifier = Modifier.padding(vertical = 12.dp),
                     style = MaterialTheme.typography.bodyLarge,
-                    color = Color.Gray,
+                    color = LittleLemonColor.green,
                     maxLines = 2
                 )
                 Text(
@@ -223,29 +222,6 @@ fun MenuItem(navController: NavController? = null, dish: MenuItemRoom) {
                     color = Color.Gray
                 )
             }
-            GlideImage(
-                model = dish.imageUrl,
-                contentDescription = stringResource(id = R.string.dish_image),
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.aspectRatio(1f / 1f),
-            )
-
-        }
-    }
-}
-
-@OptIn(ExperimentalGlideComposeApi::class)
-@Composable
-fun MenuItem2(navController: NavController, dish: MenuItemRoom) {
-    ListItem(
-        headlineContent = {
-            Text(text = dish.title)
-        },
-        overlineContent = {
-            Text(text = "$${dish.price}")
-        },
-        supportingContent = {
-            Text(text = dish.description, maxLines = 2)
         },
         trailingContent = {
             GlideImage(
@@ -259,9 +235,3 @@ fun MenuItem2(navController: NavController, dish: MenuItemRoom) {
         }
     )
 }
-
-//@Preview
-//@Composable
-//fun FilterMenuPreview() {
-//    FilterMenu()
-//}
