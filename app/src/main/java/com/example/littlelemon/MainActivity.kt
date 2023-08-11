@@ -80,7 +80,10 @@ class MainActivity : ComponentActivity() {
                         val id = requireNotNull(it.arguments?.getInt(DishDetails.argDishId)) {
                             "Dish id is null"
                         }
-                        DishDetails(id = id)
+                        val dish = databaseMenuItems.find { dish -> dish.id == id }
+                        if (dish != null) {
+                            DishDetails(dish)
+                        }
                     }
                 }
             }

@@ -1,7 +1,9 @@
 package com.example.littlelemon.screen
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -45,6 +47,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import com.example.littlelemon.DishDetails
 import com.example.littlelemon.MenuItemRoom
 import com.example.littlelemon.Profile
 import com.example.littlelemon.R
@@ -54,7 +57,8 @@ import com.example.littlelemon.ui.theme.LittleLemonColor
 fun Home(navController: NavController, dishes: List<MenuItemRoom>) {
     var searchPhrase by rememberSaveable { mutableStateOf("") }
     val selectedCategory = remember { mutableStateListOf<String>() }
-    val categoryList = dishes.map { it.category }.distinct() //listOf("Starters", "Mains", "Desserts", "Drinks")
+    val categoryList =
+        dishes.map { it.category }.distinct() //listOf("Starters", "Mains", "Desserts", "Drinks")
 
     var menuItems = if (searchPhrase.isNotEmpty()) {
         dishes.filter { it.title.contains(searchPhrase, ignoreCase = true) }
@@ -73,7 +77,7 @@ fun Home(navController: NavController, dishes: List<MenuItemRoom>) {
             MenuBreakdown(selectedCategory, categoryList)
         }
         items(menuItems) { dish ->
-            MenuItem(dish)
+            MenuItem(navController, dish)
             HorizontalDivider(
                 modifier = Modifier.padding(horizontal = 12.dp),
                 thickness = 1.dp,
@@ -202,10 +206,14 @@ fun MenuBreakdown(selectedCategory: SnapshotStateList<String>, categoryList: Lis
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun MenuItem(dish: MenuItemRoom) {
+fun MenuItem(navController: NavController, dish: MenuItemRoom) {
     ListItem(
         headlineContent = {
             Text(text = dish.title, style = MaterialTheme.typography.titleLarge)
+        },
+        modifier = Modifier.clickable {
+            Log.d("AAA", "Click ${dish.id}")
+            navController.navigate(DishDetails.route + "/${dish.id}")
         },
         supportingContent = {
             Column {
