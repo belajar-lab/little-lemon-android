@@ -6,16 +6,18 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -24,6 +26,8 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MultiChoiceSegmentedButtonRow
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.Text
@@ -43,6 +47,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
@@ -53,6 +58,7 @@ import com.example.littlelemon.Profile
 import com.example.littlelemon.R
 import com.example.littlelemon.ui.theme.LittleLemonColor
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Home(navController: NavController, dishes: List<MenuItemRoom>) {
     var searchPhrase by rememberSaveable { mutableStateOf("") }
@@ -70,46 +76,41 @@ fun Home(navController: NavController, dishes: List<MenuItemRoom>) {
         menuItems = menuItems.filter { selectedCategory.contains(it.category) }
     }
 
-    LazyColumn(modifier = Modifier.background(Color.White)) {
-        item {
-            Header(navController)
-            HeroSection(searchPhrase) { searchPhrase = it }
-            MenuBreakdown(selectedCategory, categoryList)
-        }
-        items(menuItems) { dish ->
-            MenuItem(navController, dish)
-            HorizontalDivider(
-                modifier = Modifier.padding(horizontal = 12.dp),
-                thickness = 1.dp,
-                color = LittleLemonColor.cloud
+    Scaffold(
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = {
+                    Image(
+                        painter = painterResource(id = R.drawable.littlelemonimgtxt_nobg),
+                        contentDescription = stringResource(id = R.string.little_lemon_logo),
+                        modifier = Modifier.height(30.dp)
+                    )
+                },
+                actions = {
+                    IconButton(onClick = { navController.navigate(Profile.route) }) {
+                        Image(
+                            painter = painterResource(id = R.drawable.photo_profile),
+                            contentDescription = "Profile",
+                            //modifier = Modifier.size(24.dp)
+                        )
+                    }
+                }
             )
         }
-    }
-}
-
-@Composable
-fun Header(navController: NavController) {
-    Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        IconButton(onClick = { /*TODO*/ }) {
-
-        }
-        Image(
-            painter = painterResource(id = R.drawable.littlelemonimgtxt_nobg),
-            contentDescription = "Little Lemon Logo",
-            modifier = Modifier
-                .fillMaxWidth(.5f)
-                .padding(horizontal = 20.dp)
-        )
-        IconButton(onClick = { navController.navigate(Profile.route) }) {
-            Image(
-                painter = painterResource(id = R.drawable.photo_profile),
-                contentDescription = "Cart",
-                //modifier = Modifier.size(24.dp)
-            )
+    ) { innerPadding ->
+        LazyColumn(contentPadding = innerPadding, modifier = Modifier.background(Color.White)) {
+            item {
+                HeroSection(searchPhrase) { searchPhrase = it }
+                MenuBreakdown(selectedCategory, categoryList)
+            }
+            items(menuItems) { dish ->
+                MenuItem(navController, dish)
+                HorizontalDivider(
+                    modifier = Modifier.padding(horizontal = 12.dp),
+                    thickness = 1.dp,
+                    color = LittleLemonColor.cloud
+                )
+            }
         }
     }
 }
@@ -119,18 +120,19 @@ fun HeroSection(searchPhrase: String, setSearchPhrase: (String) -> Unit) {
     Column(
         modifier = Modifier
             .background(color = LittleLemonColor.green)
-            .padding(horizontal = 12.dp, vertical = 16.dp)
+            .padding(horizontal = 12.dp, vertical = 16.dp),
     ) {
         Text(
             text = stringResource(id = R.string.restaurant_title),
+            modifier = Modifier.height(60.dp),
             style = MaterialTheme.typography.displayLarge,
             color = LittleLemonColor.yellow,
         )
-        Row(verticalAlignment = Alignment.Bottom) {
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.Bottom) {
             Column(
                 modifier = Modifier
-                    .fillMaxHeight()
-                    .fillMaxWidth(.6f),
+                    .fillMaxWidth(.6f)
+                    .height(IntrinsicSize.Max),
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
@@ -140,19 +142,19 @@ fun HeroSection(searchPhrase: String, setSearchPhrase: (String) -> Unit) {
                 )
                 Text(
                     text = stringResource(id = R.string.restaurant_description),
+                    modifier = Modifier.padding(vertical = 16.dp),
                     style = MaterialTheme.typography.bodyLarge,
                     color = LittleLemonColor.cloud,
-                    modifier = Modifier
-                        .padding(bottom = 8.dp, end = 16.dp)
                 )
             }
             Image(
                 painter = painterResource(id = R.drawable.hero_image),
                 contentDescription = stringResource(id = R.string.hero_image),
-                contentScale = ContentScale.Crop,
                 modifier = Modifier
+                    .padding(vertical = 8.dp)
                     .aspectRatio(5f / 6f)
-                    .clip(RoundedCornerShape(10.dp))
+                    .clip(RoundedCornerShape(10.dp)),
+                contentScale = ContentScale.Crop
             )
         }
         OutlinedTextField(
@@ -160,10 +162,19 @@ fun HeroSection(searchPhrase: String, setSearchPhrase: (String) -> Unit) {
             onValueChange = setSearchPhrase,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 8.dp)
-                .background(LittleLemonColor.cloud),
+                .padding(vertical = 8.dp),
             placeholder = { Text(text = stringResource(id = R.string.enter_search_phrase)) },
             leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = "Search Menu") },
+            shape = RoundedCornerShape(16.dp),
+            colors = OutlinedTextFieldDefaults.colors(
+                unfocusedBorderColor = LittleLemonColor.cloud,
+                unfocusedContainerColor = LittleLemonColor.cloud,
+                unfocusedLeadingIconColor = LittleLemonColor.charcoal,
+                unfocusedPlaceholderColor = Color.Gray,
+                focusedBorderColor = LittleLemonColor.cloud,
+                focusedContainerColor = LittleLemonColor.cloud,
+                focusedLeadingIconColor = LittleLemonColor.charcoal,
+            )
         )
     }
 }
@@ -177,7 +188,7 @@ fun MenuBreakdown(selectedCategory: SnapshotStateList<String>, categoryList: Lis
             style = MaterialTheme.typography.headlineLarge,
             fontWeight = FontWeight.ExtraBold
         )
-        MultiChoiceSegmentedButtonRow(modifier = Modifier.padding(vertical = 16.dp)) {
+        MultiChoiceSegmentedButtonRow(modifier = Modifier.padding(vertical = 16.dp), space = 10.dp) {
             categoryList.forEachIndexed { index, category ->
                 SegmentedButton(
                     checked = category in selectedCategory,
@@ -190,10 +201,16 @@ fun MenuBreakdown(selectedCategory: SnapshotStateList<String>, categoryList: Lis
                     },
                     shape = SegmentedButtonDefaults.shape(
                         position = index,
-                        count = categoryList.size
-                    )
+                        count = categoryList.size,
+                    ),
+                    colors = SegmentedButtonDefaults.colors(
+                        activeContainerColor = LittleLemonColor.green,
+                        activeContentColor = LittleLemonColor.cloud
+                    ),
+                    icon = { /* No Icon */}
                 ) {
-                    Text(text = category)
+                    val label = "${category[0].uppercase()}${category.subSequence(1,-1)}"
+                    Text(text = label)
                 }
             }
         }
@@ -242,4 +259,10 @@ fun MenuItem(navController: NavController, dish: MenuItemRoom) {
             )
         }
     )
+}
+
+@Preview
+@Composable
+fun HomeScreenPreview() {
+    HeroSection(searchPhrase = "", setSearchPhrase = {})
 }
