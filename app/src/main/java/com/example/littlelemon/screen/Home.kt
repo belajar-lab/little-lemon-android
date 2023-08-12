@@ -57,6 +57,7 @@ import com.example.littlelemon.MenuItemRoom
 import com.example.littlelemon.Profile
 import com.example.littlelemon.R
 import com.example.littlelemon.ui.theme.LittleLemonColor
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -209,7 +210,11 @@ fun MenuBreakdown(selectedCategory: SnapshotStateList<String>, categoryList: Lis
                     ),
                     icon = { /* No Icon */}
                 ) {
-                    val label = "${category[0].uppercase()}${category.subSequence(1,-1)}"
+                    val label = category.replaceFirstChar {
+                        if (it.isLowerCase()) it.titlecase(
+                            Locale.ROOT
+                        ) else it.toString()
+                    }
                     Text(text = label)
                 }
             }
