@@ -13,4 +13,6 @@
     <string name="hero_image">Restaurant\'s food Image</string>
     <string name="enter_search_phrase">Enter Search Phrase</string>
     <string name="order_for_devilery">ORDER FOR DELIVERY!</string>
+    <string name="little_lemon_logo">Little Lemon Logo</string>
+    <string name="button_back">Back Button</string>
 </resources>

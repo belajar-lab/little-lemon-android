@@ -27,7 +27,7 @@ val Typography = Typography(
     displayLarge = TextStyle(
         fontFamily = markaziText,
         fontWeight = FontWeight.Medium,
-        fontSize = 57.sp
+        fontSize = 57.sp,
     ),
     displayMedium = TextStyle(
         fontFamily = markaziText,
@@ -60,11 +60,13 @@ val Typography = Typography(
         fontSize = 16.sp,
     ),
     bodyMedium = TextStyle(
-        fontWeight = FontWeight.Bold,
+        fontFamily = karla,
+        fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
     ),
     labelLarge = TextStyle(
-        fontWeight = FontWeight.Bold,
-        fontSize = 14.sp,
+        fontFamily = karla,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
     )
 )
